@@ -86,9 +86,9 @@ span.psw{
    <h1>Welcome to the Ultimate Sportsbook</h1>
    <button type="button" onclick="signup()">Signup</button>
    <p></p>
-   <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-<div id="id01" class="modal">
-	<span onclick=document.getElementById('id01').style.display='none'"
+   <button onclick="document.getElementById('login_page').style.display='block'" style="width:auto;">Login</button>
+<div id="login_page" class="modal">
+	<span onclick=document.getElementById('login_page').style.display='none'"
 		class "close" title="Close Modal">&times;</span>
 		<form class="modal-content animate" action="/action_page.php">
 		<div class="container">
@@ -105,7 +105,7 @@ span.psw{
 		</div>
 		
 		<div class="container" style="background: -webkit-linear-gradient(top,  #db2028 0%,#db2028 33%,#0f182b 66%,#0f182b 100%)">
-			<button type="button" onclick="document.getElementById('id01').style.display='none'"
+			<button type="button" onclick="document.getElementById('login_page').style.display='none'"
 			class="cancelbtn">Cancel</button>
 			<span class="psw">Forgot <a href="#">password?</a></span>
 		</div>
@@ -119,13 +119,11 @@ span.psw{
    
    
 <script>
-// Get the modal
-var modal = document.getElementById('id01');
+var login_modal = document.getElementById('login_page');
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == login_modal) {
+        login_modal.style.display = "none";
     }
 }
 function showPass(){
