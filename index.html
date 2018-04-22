@@ -82,6 +82,26 @@ span.psw{
 	to{-webkit-transform: scale(1)}
 	}
 </style>
+
+<head>
+	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-database.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+		apiKey: "AIzaSyBRESKtiB0wYiywKNs6WjcY5Qsb9Hy5VWc",
+		authDomain: "cs-252-lab-6.firebaseapp.com",
+		databaseURL: "https://cs-252-lab-6.firebaseio.com",
+		projectId: "cs-252-lab-6",
+		storageBucket: "",
+		messagingSenderId: "623225289553"
+	  };
+	  firebase.initializeApp(config);
+	</script> 
+</head>
+
 <body>
    <h1>Welcome to the Ultimate Sportsbook</h1>
    <button type="button" onclick="signup()">Signup</button>
@@ -111,8 +131,7 @@ span.psw{
 		</div>
 		</form>
 </div>
-   
-   
+     
    
 
    
