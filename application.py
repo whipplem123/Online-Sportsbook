@@ -75,6 +75,7 @@ def login_post():
 
 @app.route("/home_page")
 def home_page():
+
 	return render_template("home_page.html", bet_list, username)
 
 
