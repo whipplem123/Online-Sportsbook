@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="static/style.css">
+
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Home Page</title>
+</head>
+
+<body>
+
+<h1>Place Bets</h1>
+<center><h3>Balance: {{ balance }}</h3></center>
+
+<table>
+<tr>
+	<th>Date</th>
+	<th>Home</th>
+	<th>Away</th>
+	<th>Money Line Home</th>
+	<th>Money Line Away</th>
+	<th>Spread Home</th>
+	<th>Spread Away</th>
+	<th>Over/Under</th>
+</tr>
+{% for date, home_id, away_id, home_money_line, away_money_line, home_spread, away_spread, over_under in bet_list %}
+	<tr>
+		<td>{{ date }}</td>
+		<td>{{ home_id }}</td>
+		<td>{{ away_id }}</td>
+		<td>{{ home_money_line }}</td>
+		<td>{{ away_money_line }}</td>
+		<td>{{ home_spread }}</td>
+		<td>{{ away_spread }}</td>
+		<td>{{ over_under }}</td>
+	</tr>
+{% endfor %}
+</table>
+
+<center>
+<h2>Place a Bet:</h2>
+
+<form method="POST">
+  <h2>Date of Game:</h2><br>
+  <input type="text" name="date" value="">
+  <br>
+  <h2>Team to bet on:</h2><br>
+  <input type="text" name="teamname" value="">
+  <br>
+  <h3>(If betting Over or Under, please put the home team)</h3>
+  <br>
+  <h2>Amount to bet:</h2><br>
+  <input type="text" name="amount" value="">
+  <br>
+
+    <h2>Type of Bet:</h2><br>
+    <select name="Type of Bet">
+    <option value="Money Line">Money Line</option>
+    <option value="Spread">Spread</option>
+    <option value="Over">Over</option>
+    <option value="Under">Under</option>
+  </select>
+  <br>
+  <input type="submit" value="Place Bet">
+</form> 
+</center>
+
+<div class="button-container">
+	<form action="/user">
+		<button>My Bets</button>
+	</form>
+	<form action="/logout">
+		<button>Logout</button>
+	</form>
+</div>
+
+</body>
+
+</html>

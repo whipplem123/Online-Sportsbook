@@ -5,7 +5,6 @@ from mysql.connector import errorcode
 
 application = app = Flask(__name__)
 app.secret_key = os.urandom(24)
-
 @app.route('/')
 def index():
 	# MAIN PAGE OF APP - COINTAINS LINKS TO LOG-IN OR SIGN-UP

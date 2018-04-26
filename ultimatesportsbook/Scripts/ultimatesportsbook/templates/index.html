@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body>
+   <h1>Welcome to the Ultimate Sportsbook</h1>
+<center>
+   <form action="/signup">
+		<button>Signup</button>
+	</form>
+	<br>
+	<form action="/login">
+		<button>Login</button>
+	</form>	
+</center>
+
+   
+   
+   
+<script>
+var login_modal = document.getElementById('login_page');
+
+window.onclick = function(event) {
+    if (event.target == login_modal) {
+        login_modal.style.display = "none";
+    }
+}
+function showPass(){
+	var x = document.getElementById("passInput");
+	if (x.type==="password"){
+		x.type = "text";
+	}
+	else{
+		x.type="password";
+	}
+}
+</script>
+   </body>
+</html>
+

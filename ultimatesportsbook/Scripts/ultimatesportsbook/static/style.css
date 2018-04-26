@@ -1,0 +1,136 @@
+﻿h1 {
+	text-align: center;
+	background-color: gold; 
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;	
+	font-size: xx-large;
+}
+h2{
+	display: inline-block; 
+	text-align: center;
+	background-color: gold; 
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	padding: 2px 4px;
+}
+h3{
+		background-color: gold; 
+			font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
+
+}
+body{
+	background-image:url("court.jpg");
+	background-position:center top;
+	background-repeat:repeat;
+}
+
+button{
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
+	background-color: gold;
+	color: black;
+	padding: 14px 40px;
+	margin: 8px 0;
+	border: none;
+	width: 200px;
+	text-align: center;
+	font-size: 24px;
+	-webkit-transition-duration: 0.3s; 
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+button:hover{
+	background-color: purple;
+	color: gold;
+}
+
+input[type="password"] {
+    width: 350px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px purple;
+    border-radius: 4px;
+}
+
+input[type="text"] {
+    width: 350px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px purple;
+    border-radius: 4px;
+}
+
+select{
+	width: 18%;
+    padding: 8px 8px;
+    text-align:center;
+    font-size: 24px;
+    border: 4px purple;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+input[type=checkbox]{
+	
+}
+
+input[type=submit]{
+	font-size: xx-large;
+	font-weight: bold;
+	font-style: italic;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+		background-color: gold;
+	color: black;
+	padding: 14px 40px;
+	margin: 8px 0;
+	border: none;
+	width: 200px;
+	text-align: center;
+	font-size: 24px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.3s; 
+    transition-duration: 0.5s;
+}
+
+input[type=submit]:hover{
+	background-color: purple;
+	color: gold;
+}
+
+table{
+	width: 100%;
+}
+
+table, th, td{
+	text-align: center;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	border: 1px solid black;
+	border-collapse: collapse;
+	background-color: gold;
+}
+th{
+	text-align: center;
+}
+
+.button-container form,
+.button-container form div {
+    display: inline;
+}
+
+.button-container button {
+    display: inline;
+    vertical-align: middle;
+}
+
+h4{
+	display: inline-block; 
+	text-align: right;
+	font-style: italic;
+	color: gold;
+	background-color: purple; 
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	padding: 2px 4px;
+}

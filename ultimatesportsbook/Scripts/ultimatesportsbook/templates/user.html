@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>My Bets</title>
+</head>
+
+<body>
+<h1>{{ username }}'s Homepage</h1>
+<center><h3>Balance: {{ balance }}</h3></center>
+<center><h2>Pending Bets</h2></center>
+<table>
+<tr>
+	<th>Date</th>
+	<th>Team Bet On</th>
+	<th>Type of Bet</th>
+	<th>Amount Bet</th>
+</tr>
+{% for (date, team_id, bet_type, risk) in current_bet_list %}
+<tr>
+	<td>{{ date }}</td>
+	<td>{{ team_id }}</td>
+	<td>{{ bet_type }}</td>
+	<td>{{ risk }}</td>
+</tr>
+{% endfor %}
+</table>
+<center><h2>Past Bets</h2></center>
+<table>
+<tr>
+	<th>Date</th>
+	<th>Team bet on</th>
+	<th>Type of Bet</th>
+	<th>Amount Bet</th>
+	<th>Payout</th>
+</tr>
+{% for (date, team_id, bet_type, risk, payout) in past_bet_list %}
+<tr>
+	<td>{{ date }}</td>
+	<td>{{ team_id }}</td>
+	<td>{{ bet_type }}</td>
+	<td>{{ risk }}</td>
+	<td>{{ payout }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<form method="POST">
+<center>
+  <h2>Amount of funds to add:</h2><br>
+  <input type="text" name="funds" value="">
+  <br>
+  <input type="submit" value="Add Funds">
+  </center>
+</form> 
+
+<div class="button-container">
+	<form action="/home_page">
+		<button>Home Page</button>
+	</form>
+	<form action="/logout">
+		<button>Logout</button>
+	</form>
+</div>
+
+
+</body>
+
+</html>
