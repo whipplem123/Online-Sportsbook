@@ -1,3 +1,4 @@
+import math
 import mysql.connector as sql
 from mysql.connector import errorcode
 
@@ -131,6 +132,7 @@ for (username, date, bet_type, risk, team_id) in cursor:
 				# Favorite
 				payout = risk * 100.0 / (-1.0 * awayML)
 
+			payout = round(payout, 2)
 			cursor2.execute("update users set balance = balance + %s where username = %s", (payout, username,))
 
 	elif bet_type == 'O':
