@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+import os
 import mysql.connector as sql
 from mysql.connector import errorcode
 
 application = app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route('/')
 def index():
@@ -38,6 +40,7 @@ def signup_post():
 		conn.commit()
 		conn.close()
 		# TODO: CREATE SESSION
+		session['user'] = user
 		return redirect(url_for('home_page'))
 
 @app.route("/login")
@@ -51,11 +54,9 @@ def login_post():
 	username = request.form["username"]
 	pw = request.form["password"]
 	
-	print("%s %s" % (username, pw))
 	# Establish SQL connection
 	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
 	cursor = conn.cursor(buffered=True)
-	print ("Connected")
 	cursor.execute("select * from users where username = %s", (username,))
 	
 	# Check if password is correct
@@ -69,6 +70,7 @@ def login_post():
 	conn.close()
 	if pwCorrect:
 		# TODO: CREATE SESSION
+		session['user'] = username
 		return redirect(url_for('home_page'))
 	else:
 		# TODO: GIVE ALERT SAYING INVALID PASSWORD
@@ -77,14 +79,40 @@ def login_post():
 
 @app.route("/home_page")
 def home_page():
+	if not 'user' in session:
+		return redirect(url_for('index'))
 	# Establish SQL connection
 	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
 	cursor = conn.cursor(buffered=True)
 	cursor.execute("select date, home_id, away_id, home_money_line, away_money_line, home_spread, away_spread, over_under from nba_schedule order by date limit 10")
+	# Send bet list to home_page
 	bet_list = cursor.fetchmany(size=10)
-	print(bet_list)
+	conn.close()
+	print(session['user'])
 	return render_template("home_page.html", bet_list=bet_list)
 
+@app.route("/home_page", methods=['POST'])
+def home_page_post():
+	if not 'user' in session:
+		return redirect(url_for('index'))
+
+	# Obtain betting inputs
+	date = request.form["date"]
+	team = request.form["teamname"]
+	risk = request.form["amount"]
+	type = request.form["Type of Bet"]
+	
+	# Establish SQL Connection
+	username = session['user']
+	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
+	cursor = conn.cursor(buffered=True)
+	cursor.execute("insert into current_bets values(%s, %s, %s, %s, %s)", (username, date, team, type, risk,))
+	cursor.execute("update users set balance = balance - %s where username = %s", (risk, username))
+	conn.commit()
+	
+	# Return to page
+	# TODO: SHOW CONFIRMATION WINDOW
+	return redirect(url_for('home_page'))
 
 if __name__ == "__main__":
 	application.debug = True

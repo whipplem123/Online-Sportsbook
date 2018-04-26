@@ -2,11 +2,11 @@ import math
 import mysql.connector as sql
 from mysql.connector import errorcode
 
-date = raw_input("Enter the date of the game: ")
-homeID = raw_input("Enter the 3-letter abbreviation for the home team: ")
-awayID = raw_input("Enter the 3-letter abbreviation for the away team: ")
-homeScore = input("Enter the home team's score: ")
-awayScore = input("Enter the away team's score: ")
+date = input("Enter the date of the game: ")
+homeID = input("Enter the 3-letter abbreviation for the home team: ")
+awayID = input("Enter the 3-letter abbreviation for the away team: ")
+homeScore = int(input("Enter the home team's score: "))
+awayScore = int(input("Enter the away team's score: "))
 
 homeWon = True
 if awayScore > homeScore:
@@ -92,22 +92,22 @@ for (home_money_line, away_money_line) in cursor:
 	awayML = away_money_line
 
 # Finally, update bets in bets table
-cursor.execute("select * from bets where date = %s and (team_id = %s or team_id = %s)", (date, homeID, awayID,))
+cursor.execute("select username, date, bet_type, risk, team_id from current_bets where date = %s and (team_id = %s or team_id = %s)", (date, homeID, awayID,))
 for (username, date, bet_type, risk, team_id) in cursor:
 	cursor2 = conn.cursor(buffered=True)
-	if bet_type == 'S':
+	payout = risk
+	if bet_type == 'Spread':
 		# Spread bet
 		if (team_id == homeID and homeCovered) or (team_id == awayID and not homeCovered):
 			# Winning bet
-			cursor2.execute("update users set balance = balance + %s where username = %s", (risk, username,))
+			cursor2.execute("update users set balance = balance + %s + %s where username = %s", (risk, risk, username,))
 		else:
-			# Losing bet
-			cursor2.execute("update users set balance = balance - %s where username = %s", (risk, username,))
-	elif bet_type == 'M':
+			payout = -1 * risk
+			
+	elif bet_type == 'Money Line':
 		# Money line bet
 		if team_id == homeID and homeWon:
 			# Winning bet on home team
-			payout = 0.0
 			if homeML > 0:
 				# Underdog
 				payout = risk * homeML / 100.0
@@ -115,16 +115,10 @@ for (username, date, bet_type, risk, team_id) in cursor:
 				# Favorite
 				payout = risk * 100.0 / (-1.0 * homeML)
 
-			cursor2.execute("update users set balance = balance + %s where username = %s", (payout, username,))
+			cursor2.execute("update users set balance = balance + %s + %s where username = %s", (payout, risk, username,))
 
-		elif team_id == homeID and not homeWon:
-			cursor2.execute("update users set balance = balance - %s where username = %s", (risk, username,))
-
-		elif team_id == awayID and homeWon:
-			cursor2.execute("update users set balance = balance - %s where username = %s", (risk, username,))
-		else:
+		elif team_id == awayID and not homeWon:
 			# Winning bet on away team
-			payout = 0.0
 			if awayML > 0:
 				# Underdog
 				payout = risk * awayML / 100.0
@@ -133,22 +127,28 @@ for (username, date, bet_type, risk, team_id) in cursor:
 				payout = risk * 100.0 / (-1.0 * awayML)
 
 			payout = round(payout, 2)
-			cursor2.execute("update users set balance = balance + %s where username = %s", (payout, username,))
+			cursor2.execute("update users set balance = balance + %s + %s where username = %s", (payout, risk, username,))
 
-	elif bet_type == 'O':
-		if over:
-			cursor2.execute("update users set balance = balance + %s where username = %s", (risk, username,))
 		else:
-			cursor2.execute("update users set balance = balance - %s where username = %s", (risk, username,))
-	elif bet_type == 'U':
+			payout = -1 * risk
+			
+	elif bet_type == 'Over':
 		if over:
-			cursor2.execute("update users set balance = balance - %s where username = %s", (risk, username,))
+			cursor2.execute("update users set balance = balance + %s + %s where username = %s", (risk, risk, username,))
 		else:
-			cursor2.execute("update users set balance = balance + %s where username = %s", (risk, username,))
-
+			payout = -1 * risk
+			
+	elif bet_type == 'Under':
+		if not over:
+			cursor2.execute("update users set balance = balance + %s + %s where username = %s", (risk, risk, username,))
+		else:
+			payout = -1 * risk
+			
 	# Remove bet from table
-	cursor2.execute("delete from bets where date = %s and username = %s and bet_type = %s and risk = %s and team_id = %s limit 1", (date, username, bet_type, risk, team_id,))
-
+	cursor2.execute("delete from current_bets where date = %s and username = %s and bet_type = %s and risk = %s and team_id = %s limit 1", (date, username, bet_type, risk, team_id,))
+	# Add bet to past bets
+	cursor2.execute("insert into past_bets values(%s, %s, %s, %s, %s, %s)", (username, date, team_id, bet_type, risk, payout,))
+	
 print("Updated bets")
 
 ####################################################################################################################################################
@@ -159,7 +159,7 @@ print("Updated schedule")
 
 ####################################################################################################################################################
 # UPDATE LINES FOR UPCOMING SCHEDULE
-execfile("LineCreator.py")
+exec(open("LineCreator.py").read())
 print("Updated lines")
 
 
