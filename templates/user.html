@@ -2,16 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title>My Bets</title>
 </head>
 
 <body>
-<h1> {{ username }} Homepage</h1>
-
-<br>
-<h2>Pending Bets</h2>
-<table style="width:100%">
+<h1>{{ username }}'s Homepage</h1>
+<center><h2>Pending Bets</h2></center>
+<table>
 <tr>
 	<th>Date</th>
 	<th>Team bet on</th>
@@ -27,10 +26,8 @@
 </tr>
 {% endfor %}
 </table>
-
-<br>
-<h2>Past Bets</h2>
-<table style="width:100%">
+<center><h2>Past Bets</h2></center>
+<table>
 <tr>
 	<th>Date</th>
 	<th>Team bet on</th>
@@ -49,6 +46,18 @@
 {% endfor %}
 </table>
 
+<form method="POST">
+<center>
+  <h2>Amount of funds to add:</h2><br>
+  <input type="text" name="funds" value="">
+  <br>
+  <input type="submit" value="Add Funds">
+  </center>
+</form> 
+
+<form action="/logout">
+	<button>Logout</button>
+</form>
 
 </body>
 

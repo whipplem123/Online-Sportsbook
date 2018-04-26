@@ -1,36 +1,18 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<style>
-
-.game{
-	background-color: lime;
-	padding: 10px;
-	color:black;
-}
-
-img{
-	width: 100%;
-}
-
-table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-th{
-	text-align: center;
-}
-</style>
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
+
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title>Home Page</title>
 </head>
 
 <body>
 
-<center><h1>Bets Home?</h1></center>
+<h1>Place Bets</h1>
 
-<p class="game">
-<table style="width:100%">
+
+<table>
 <tr>
 	<th>Date</th>
 	<th>Home</th>
@@ -54,31 +36,38 @@ th{
 	</tr>
 {% endfor %}
 </table>
-</p>
+
+<center>
 <h2>Place a bet:</h2>
 
 <form method="POST">
-  Date of Match:
-  <input type="text" name="date">
+  <h2>Date of Match:</h2><br>
+  <input type="text" name="date" value="">
   <br>
-  Team to bet on:
-  <input type="text" name="teamname">
+  <h2>Team to bet on:</h2><br>
+  <input type="text" name="teamname" value="">
   <br>
-  Amount to bet:
-  <input type="text" name="amount">
+  <h2>Amount to bet:</h2><br>
+  <input type="text" name="amount" value="">
   <br>
 
-    Type of bet:
+    <h2>Type of bet:</h2><br>
     <select name="Type of Bet">
     <option value="Money Line">Money Line</option>
     <option value="Spread">Spread</option>
     <option value="Over">Over</option>
-	<option value="Under">Under</option>
+    <option value="Under">Under</option>
   </select>
   <br>
-  
+  <h3>(If betting Over or Under, please put the home team)</h3>
+  <br>
   <input type="submit" value="Place Bet">
 </form> 
+</center>
+
+<form action="/logout">
+	<button>Logout</button>
+</form>
 
 </body>
 
