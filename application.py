@@ -133,6 +133,31 @@ def user():
 
 	return render_template("user.html", username=username, current_bet_list=current_bet_list, past_bet_list=past_bet_list)
 	
+@app.route("/user", methods=['POST'])
+def user_post():
+	if not 'user' in session:
+		return redirect(url_for('index'))
+	
+	# Get value to add
+	deposit = request.form["funds"]
+	
+	# Establish SQL Connection
+	username = session['user']
+	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
+	cursor = conn.cursor(buffered=True)
+	
+	# Add to user's balance
+	cursor.execute("update users set balance = balance + %s", (deposit,))
+	conn.commit()
+	conn.close()
+
+	return redirect(url_for('user'))
+	
+@app.route("/logout")
+def logout():
+	session.pop('user', None)
+	return redirect(url_for('index'))
+
 if __name__ == "__main__":
 	application.debug = True
 	application.run()

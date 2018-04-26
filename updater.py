@@ -115,6 +115,7 @@ for (username, date, bet_type, risk, team_id) in cursor:
 				# Favorite
 				payout = risk * 100.0 / (-1.0 * homeML)
 
+			payout = round(payout, 2)
 			cursor2.execute("update users set balance = balance + %s + %s where username = %s", (payout, risk, username,))
 
 		elif team_id == awayID and not homeWon:
