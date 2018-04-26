@@ -9,6 +9,9 @@
 
 <body>
 <h1>{{ username }}'s Homepage</h1>
+<div align="right">
+<h4>{{ username }}'s Balance: {{ balance }}</h4>
+</div>
 <center><h2>Pending Bets</h2></center>
 <table>
 <tr>
@@ -55,9 +58,15 @@
   </center>
 </form> 
 
-<form action="/logout">
-	<button>Logout</button>
-</form>
+<div class="button-container">
+	<form action="/home_page">
+		<button>Home Page</button>
+	</form>
+	<form action="/logout">
+		<button>Logout</button>
+	</form>
+</div>
+
 
 </body>
 
