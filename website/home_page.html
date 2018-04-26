@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<style>
+
+.game{
+	background-color: lime;
+	padding: 10px;
+	color:black;
+}
+
+img{
+	width: 100%;
+}
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+th{
+	text-align: center;
+}
+</style>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Home Page</title>
+</head>
+
+<body>
+
+<center><h1>Bets Home?</h1></center>
+<h1 class="game">
+
+<table style="width:100%">
+<tr>
+	<th>Date</th>
+	<th>Home</th>
+	<th>Away</th>
+	<th>Moneyline Home</th>
+	<th>Moneyline Away</th>
+	<th>Spread Home</th>
+	<th>Spread Away</th>
+	<th>Over/Under</th>
+</tr>
+<tr>
+	<td>{{ date }}</td>
+	<td>{{ homeTeamName }}</td>
+	<td>{{ awayTeamName }}</td>
+	<td>{{ homeML }}</td>
+	<td>{{ awayML }}</td>
+	<td>{{ homeSP }}</td>
+	<td>{{ awaySP }}</td>
+	<td>{{ overunder }}</td>
+</tr>
+</table>
+
+</h1>
+</body>
+
+</html>
