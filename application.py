@@ -49,21 +49,26 @@ def login_post():
 	username = request.form["username"]
 	pw = request.form["password"]
 	
+	print("%s %s" % (username, pw))
 	# Establish SQL connection
 	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
 	cursor = conn.cursor(buffered=True)
-	cursor.execute("select top 1 from users where username = %s", (username,))
+	print ("Connected")
+	cursor.execute("select * from users where username = %s", (username,))
 	
 	# Check if password is correct
 	pwCorrect = False
 	for(username, password, balance) in cursor:
+		print(password)
 		if password == pw:
 			pwCorrect = True
 
 	conn.close()
 	if pwCorrect:
+		# TODO: CREATE SESSION
 		return redirect(url_for('home_page'))
 	else:
+		# TODO: GIVE ALERT SAYING INVALID PASSWORD
 		return redirect(url_for('login'))
 
 @app.route("/home_page")
