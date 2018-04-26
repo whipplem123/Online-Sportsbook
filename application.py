@@ -81,15 +81,20 @@ def login_post():
 def home_page():
 	if not 'user' in session:
 		return redirect(url_for('index'))
+		
+	username = session['user']
 	# Establish SQL connection
 	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
 	cursor = conn.cursor(buffered=True)
+	cursor.execute("select balance from users where username = %s", (username,))
+	balance = cursor.fetchone()[0]
 	cursor.execute("select date, home_id, away_id, home_money_line, away_money_line, home_spread, away_spread, over_under from nba_schedule order by date limit 10")
+
 	# Send bet list to home_page
 	bet_list = cursor.fetchmany(size=10)
 	conn.close()
 	print(session['user'])
-	return render_template("home_page.html", bet_list=bet_list)
+	return render_template("home_page.html", balance=balance, bet_list=bet_list)
 
 @app.route("/home_page", methods=['POST'])
 def home_page_post():
@@ -99,13 +104,20 @@ def home_page_post():
 	# Obtain betting inputs
 	date = request.form["date"]
 	team = request.form["teamname"]
-	risk = request.form["amount"]
+	risk = float(request.form["amount"])
 	type = request.form["Type of Bet"]
 	
 	# Establish SQL Connection
 	username = session['user']
 	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
 	cursor = conn.cursor(buffered=True)
+	
+	cursor.execute("select balance from users where username = %s", (username,))
+	balance = float(cursor.fetchone()[0])
+	if risk > balance:
+		# TODO: Notify that risk exceeds balance
+		return redirect(url_for('home_page'))
+	
 	cursor.execute("insert into current_bets values(%s, %s, %s, %s, %s)", (username, date, team, type, risk,))
 	cursor.execute("update users set balance = balance - %s where username = %s", (risk, username))
 	conn.commit()
@@ -124,6 +136,10 @@ def user():
 	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
 	cursor = conn.cursor(buffered=True)
 	
+	# Get balance
+	cursor.execute("select balance from users where username = %s", (username,))
+	balance = cursor.fetchone()[0]
+	
 	# Get current bets
 	cursor.execute("select date, team_id, bet_type, risk from current_bets where username = %s", (username,))
 	current_bet_list = cursor.fetchall()
@@ -131,7 +147,7 @@ def user():
 	past_bet_list = cursor.fetchall()
 	conn.close()
 
-	return render_template("user.html", username=username, current_bet_list=current_bet_list, past_bet_list=past_bet_list)
+	return render_template("user.html", username=username, balance=balance, current_bet_list=current_bet_list, past_bet_list=past_bet_list)
 	
 @app.route("/user", methods=['POST'])
 def user_post():
