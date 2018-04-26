@@ -113,7 +113,26 @@ def home_page_post():
 	# Return to page
 	# TODO: SHOW CONFIRMATION WINDOW
 	return redirect(url_for('home_page'))
+	
+@app.route("/user")
+def user():
+	if not 'user' in session:
+		return redirect(url_for('index'))
+	
+	# Establish SQL Connection
+	username = session['user']
+	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
+	cursor = conn.cursor(buffered=True)
+	
+	# Get current bets
+	cursor.execute("select date, team_id, bet_type, risk from current_bets where username = %s", (username,))
+	current_bet_list = cursor.fetchall()
+	cursor.execute("select date, team_id, bet_type, risk, payout from past_bets where username = %s limit 20", (username,))
+	past_bet_list = cursor.fetchall()
+	conn.close()
 
+	return render_template("user.html", username=username, current_bet_list=current_bet_list, past_bet_list=past_bet_list)
+	
 if __name__ == "__main__":
 	application.debug = True
 	application.run()

@@ -7,22 +7,46 @@
 </head>
 
 <body>
-<h1>User Homepage</h1>
+<h1> {{ username }} Homepage</h1>
+
+<br>
+<h2>Pending Bets</h2>
 <table style="width:100%">
 <tr>
 	<th>Date</th>
 	<th>Team bet on</th>
-	<th>The Opponent</th>
 	<th>Type of Bet</th>
 	<th>Amount Bet</th>
 </tr>
+{% for (date, team_id, bet_type, risk) in current_bet_list %}
 <tr>
 	<td>{{ date }}</td>
-	<td>{{ chosenTeamName }}</td>
-	<td>{{ otherTeamName }}</td>
-	<td>{{ bettype }}</td>
-	<td>{{ amountbet }}</td>
+	<td>{{ team_id }}</td>
+	<td>{{ bet_type }}</td>
+	<td>{{ risk }}</td>
 </tr>
+{% endfor %}
+</table>
+
+<br>
+<h2>Past Bets</h2>
+<table style="width:100%">
+<tr>
+	<th>Date</th>
+	<th>Team bet on</th>
+	<th>Type of Bet</th>
+	<th>Amount Bet</th>
+	<th>Payout</th>
+</tr>
+{% for (date, team_id, bet_type, risk, payout) in past_bet_list %}
+<tr>
+	<td>{{ date }}</td>
+	<td>{{ team_id }}</td>
+	<td>{{ bet_type }}</td>
+	<td>{{ risk }}</td>
+	<td>{{ payout }}</td>
+</tr>
+{% endfor %}
 </table>
 
 
