@@ -90,55 +90,10 @@ span.psw{
 <body>
    <h1>Welcome to the Ultimate Sportsbook</h1>
    <center>
-   <button onclick="document.getElementById('signup_page').style.display='block'" style="width:100px;">Signup</button>
+   <button onclick="nothing" style="width:100px;">Signup</button>
 	<br>
-   <button onclick="document.getElementById('login_page').style.display='block'" style="width:100px;">Login</button>
-</center>
-<div id="login_page" class="modal">
-	<span onclick=document.getElementById('login_page').style.display='none'"
-		class "close" title="Close Modal">&times;</span>
-		<form class="modal-content animate" action="/action_page.php">
-		<div class="container">
-			<label for="uname"><b>Username:</b></label>
-			<input type="text" placeholder="Enter Username" name="uname" required><br>
-			<label for="uname"><b>Password:</b></label>
-			<input type="password" id="passInput" placeholder="Enter Password" name="psw" required>
-			<br>
-			<input type="checkbox" onclick="showPass()">Show Password<br>
-			<button type="submit">Login</button>
-			<label>
-				<input type="checkbox" checked="checked" name="remember"> Remember Me
-			</label>
-		</div>
-		
-		<div class="container" style="background: -webkit-linear-gradient(top,  #db2028 0%,#db2028 33%,#0f182b 66%,#0f182b 100%)">
-			<button type="button" onclick="document.getElementById('login_page').style.display='none'"
-			class="cancelbtn">Cancel</button>
-			<span class="psw">Forgot <a href="#">password?</a></span>
-		</div>
-		</form>
-</div>     
-<div id="signup_page" class="modal">
-	<span onclick=document.getElementById('signup_page').style.display='none'"
-		class "close" title="Close Modal">&times;</span>
-		<form class="modal-content animate" action="/action_page.php">
-		<div class="container">
-			<label for="uname"><b>Choose Username:</b></label>
-			<input type="text" placeholder="Enter Username" name="uname" required><br>
-			<label for="uname"><b>Choose Password:</b></label>
-			<input type="password" id="passInput" placeholder="Enter Password" name="psw" required>
-			<br>
-			<input type="checkbox" onclick="showPass()">Show Password<br>
-			<button type="submit">Create Account</button>
-		</div>
-		<div class="container" style="background: -webkit-linear-gradient(top,  #db2028 0%,#db2028 33%,#0f182b 66%,#0f182b 100%)">
-			<button type="button" onclick="document.getElementById('signup_page').style.display='none'"
-			class="cancelbtn">Cancel</button>
-		</div>
-		</form>
-
-</div>
-
+   <button onclick="nothing" style="width:100px;">Login</button>
+	</center>
 
    
    

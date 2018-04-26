@@ -28,8 +28,8 @@ th{
 <body>
 
 <center><h1>Bets Home?</h1></center>
-<h1 class="game">
 
+<p class="game">
 <table style="width:100%">
 <tr>
 	<th>Date</th>
@@ -52,8 +52,31 @@ th{
 	<td>{{ overunder }}</td>
 </tr>
 </table>
+</p>
+<h2>Place a bet:</h2>
 
-</h1>
+<form method="POST">
+  Date of Match:
+  <input type="text" name="date">
+  <br>
+  Team to bet on:
+  <input type="text" name="teamname">
+  <br>
+  Amount to bet:
+  <input type="text" name="amount">
+  <br>
+
+    Type of bet:
+    <select name="Type of Bet">
+    <option value="moneyline">Moneyline</option>
+    <option value="spread">Spread</option>
+    <option value="overunder">Over/Under</option>
+  </select>
+  <br>
+  
+  <input type="submit" value="Place Bet">
+</form> 
+
 </body>
 
 </html>
