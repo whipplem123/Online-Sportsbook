@@ -7,8 +7,7 @@ application = app = Flask(__name__)
 @app.route('/')
 def index():
 	# MAIN PAGE OF APP - COINTAINS LINKS TO LOG-IN OR SIGN-UP
-	# return render_template("index.html")
-    return render_template('my-form.html')
+	return render_template("index.html") #return render_template('my-form.html')
 
 @app.route("/signup")
 def signup():
@@ -29,14 +28,16 @@ def signup_post():
 	# Check if username exists
 	if cursor.rowcount != 0:
 		# Exists - redirect to signup
+		# TODO: ADD ALERT SAYING INVALID USERNAME
 		conn.close()
 		return redirect(url_for('signup'))
 	else:
 		# Doesn't exist - add to users and redirect to bets page
-		cursor.execute("insert into users values('%s', '%s', 100.0)", (user, pw,))
+		cursor.execute("insert into users values(%s, %s, 100.0)", (user, pw,))
 		conn.commit()
 		conn.close()
-		return redirect(url_for('home'))
+		# TODO: CREATE SESSION
+		return redirect(url_for('home_page'))
 
 @app.route("/login")
 def login():
@@ -58,8 +59,9 @@ def login_post():
 	
 	# Check if password is correct
 	pwCorrect = False
+	b = 0.0
 	for(username, password, balance) in cursor:
-		print(password)
+		b = balance
 		if password == pw:
 			pwCorrect = True
 
