@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import mysql.connector as sql
 from mysql.connector import errorcode
 
@@ -29,6 +29,7 @@ def signup_post():
 	if cursor.rowcount != 0:
 		# Exists - redirect to signup
 		# TODO: ADD ALERT SAYING INVALID USERNAME
+		#flash('That username is already taken')
 		conn.close()
 		return redirect(url_for('signup'))
 	else:
@@ -71,12 +72,18 @@ def login_post():
 		return redirect(url_for('home_page'))
 	else:
 		# TODO: GIVE ALERT SAYING INVALID PASSWORD
+		#flash('Invalid password')
 		return redirect(url_for('login'))
 
 @app.route("/home_page")
 def home_page():
-
-	return render_template("home_page.html", bet_list, username)
+	# Establish SQL connection
+	conn = sql.connect(user='thesportsbook', password='ultimate', host='cs252-lab6-mariadb.cuxhokshop3s.us-east-2.rds.amazonaws.com', database='lab6')
+	cursor = conn.cursor(buffered=True)
+	cursor.execute("select date, home_id, away_id, home_money_line, away_money_line, home_spread, away_spread, over_under from nba_schedule order by date limit 10")
+	bet_list = cursor.fetchmany(size=10)
+	print(bet_list)
+	return render_template("home_page.html", bet_list=bet_list)
 
 
 if __name__ == "__main__":

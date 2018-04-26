@@ -41,16 +41,18 @@ th{
 	<th>Spread Away</th>
 	<th>Over/Under</th>
 </tr>
-<tr>
-	<td>{{ date }}</td>
-	<td>{{ homeTeamName }}</td>
-	<td>{{ awayTeamName }}</td>
-	<td>{{ homeML }}</td>
-	<td>{{ awayML }}</td>
-	<td>{{ homeSP }}</td>
-	<td>{{ awaySP }}</td>
-	<td>{{ overunder }}</td>
-</tr>
+{% for date, home_id, away_id, home_money_line, away_money_line, home_spread, away_spread, over_under in bet_list %}
+	<tr>
+		<td>{{ date }}</td>
+		<td>{{ home_id }}</td>
+		<td>{{ away_id }}</td>
+		<td>{{ home_money_line }}</td>
+		<td>{{ away_money_line }}</td>
+		<td>{{ home_spread }}</td>
+		<td>{{ away_spread }}</td>
+		<td>{{ over_under }}</td>
+	</tr>
+{% endfor %}
 </table>
 </p>
 <h2>Place a bet:</h2>
